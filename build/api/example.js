@@ -16,7 +16,7 @@ var router = _express["default"].Router();
 router.get('/', function (req, res) {
   _logging["default"].info('example endpoint');
 
-  res.sendStatus(200).send("hello world");
+  res.send('hello world');
 });
 var _default = router;
 exports["default"] = _default;

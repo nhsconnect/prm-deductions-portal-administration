@@ -11,8 +11,6 @@ var _traverse = _interopRequireDefault(require("traverse"));
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
-var _correlation = require("../middleware/correlation");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var OBFUSCATED_VALUE = '********';
@@ -25,13 +23,9 @@ var obfuscateSecrets = (0, _winston.format)(function (info) {
   return updated;
 });
 exports.obfuscateSecrets = obfuscateSecrets;
-var addCorrelationInfo = (0, _winston.format)(function (info) {
-  info.correlationId = (0, _correlation.getCorrelationId)();
-  return info;
-});
 var options = {
   level: 'debug',
-  format: _winston.format.combine(addCorrelationInfo(), _winston.format.timestamp(), _winston.format.json(), obfuscateSecrets()),
+  format: _winston.format.combine(_winston.format.timestamp(), _winston.format.json(), obfuscateSecrets()),
   transports: [new _winston.transports.Console({
     handleExceptions: true
   })]

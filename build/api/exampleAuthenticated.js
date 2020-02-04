@@ -18,7 +18,7 @@ var router = _express["default"].Router();
 router.get('/', _auth.checkIsAuthenticated, function (req, res) {
   _logging["default"].info('authenticated successfully');
 
-  res.sendStatus(200).send("hello world authenticated");
+  res.sendStatus(200).send('hello world authenticated');
 });
 var _default = router;
 exports["default"] = _default;

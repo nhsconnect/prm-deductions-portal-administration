@@ -51,4 +51,4 @@ describe('app', () => {
         .end(done);
     });
   });
-})
+});

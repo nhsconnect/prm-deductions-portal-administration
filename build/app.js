@@ -11,9 +11,11 @@ var _expressWinston = require("express-winston");
 
 var _expressHttpContext = _interopRequireDefault(require("express-http-context"));
 
-var _logging = require("./config/logging");
+var _example = _interopRequireDefault(require("./api/example"));
 
-var _correlation = require("./middleware/correlation");
+var _exampleAuthenticated = _interopRequireDefault(require("./api/exampleAuthenticated"));
+
+var _logging = require("./config/logging");
 
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
@@ -23,13 +25,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var app = (0, _express["default"])();
 app.use(_expressHttpContext["default"].middleware);
-app.use(_correlation.addCorrelationInfo);
 app.use((0, _expressWinston.logger)(_logging.options));
 app.get('/health', function (req, res) {
   res.sendStatus(200);
 });
-app.use('/example', example);
-app.use('/exampleAuthenticated', exampleAuthenticated);
+app.use('/example', _example["default"]);
+app.use('/exampleAuthenticated', _exampleAuthenticated["default"]);
 app.use('/swagger', _swaggerUiExpress["default"].serve, _swaggerUiExpress["default"].setup(_swagger["default"]));
 app.use((0, _expressWinston.errorLogger)(_logging.options)); // eslint-disable-next-line no-unused-vars
 
