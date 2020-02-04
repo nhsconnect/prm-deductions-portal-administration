@@ -1,0 +1,50 @@
+{
+  "name": "prm-deductions-pds-adaptor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "lint": "eslint src/ --fix",
+    "unit": "jest \"^((?!.*integration.*).)*$\" --setupFiles dotenv/config",
+    "test": "npm run lint && npm run unit",
+    "integration": "jest \"src/.*\\integration.test\\.js\" --detectOpenHandles --forceExit --setupFiles dotenv/config",
+    "itest": "npm run lint && npm run integration",
+    "coverage": "jest --maxWorkers=1 --coverage --detectOpenHandles --forceExit --setupFiles dotenv/config",
+    "build": "babel src -d build --ignore '**/*.test.js' && cp src/*.json build",
+    "start": "node build/server.js",
+    "start-local": "babel-node -r node_modules/dotenv/config src/server.js",
+    "start-local-nodemon": "nodemon --exec babel-node -r node_modules/dotenv/config src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhsconnect/prm-deductions-pds-adaptor.git"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.6.3",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-jest": "^23.0.4",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "jest-when": "^2.7.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-http-context": "^1.2.3",
+    "express-winston": "^4.0.1",
+    "lodash.clonedeep": "^4.5.0",
+    "swagger-ui-express": "^4.1.2",
+    "traverse": "^0.6.6",
+    "uuid": "^3.3.3",
+    "winston": "^3.2.1"
+  }
+}
