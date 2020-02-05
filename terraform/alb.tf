@@ -1,5 +1,5 @@
 resource "aws_alb_target_group" "alb-tg" {
-  name        = "${var.environment}-deductions-${var.component_name}-tg"
+  name        = "${var.environment}-${var.component_name}-tg"
   port        = 3000
   protocol    = "HTTP"
   vpc_id      = data.aws_ssm_parameter.deductions_private_vpc_id.value
