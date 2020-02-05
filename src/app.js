@@ -1,11 +1,11 @@
 import express from 'express';
-import { errorLogger, logger as requestLogger } from 'express-winston';
 import httpContext from 'express-http-context';
+import { errorLogger, logger as requestLogger } from 'express-winston';
+import swaggerUi from 'swagger-ui-express';
 import example from './api/example';
 import exampleAuthenticated from './api/exampleAuthenticated';
+import healthCheck from './api/health';
 import { options } from './config/logging';
-
-import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json';
 
 const app = express();
@@ -13,9 +13,7 @@ const app = express();
 app.use(httpContext.middleware);
 app.use(requestLogger(options));
 
-app.get('/health', (req, res) => {
-  res.sendStatus(200);
-});
+app.use('/health', healthCheck);
 
 app.use('/example', example);
 app.use('/exampleAuthenticated', exampleAuthenticated);

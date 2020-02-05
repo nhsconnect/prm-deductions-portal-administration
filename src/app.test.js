@@ -1,6 +1,8 @@
 import request from 'supertest';
+import { message } from './api/health';
 import app from './app';
 
+jest.mock('./config/logging');
 jest.mock('express-winston', () => ({
   errorLogger: () => (req, res, next) => next(),
   logger: () => (req, res, next) => next()
@@ -11,7 +13,8 @@ describe('app', () => {
     it('should return a 200 status code', done => {
       request(app)
         .get('/health')
-        .expect(200)
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect(200, message)
         .end(done);
     });
   });
