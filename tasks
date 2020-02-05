@@ -3,8 +3,8 @@
 set -Eeo pipefail
 
 AWS_DEFAULT_REGION=eu-west-2
-IMAGE_REPO_NAME=deductions/pds-adaptor
-NHS_SERVICE=pds-adaptor
+IMAGE_REPO_NAME=deductions/generic-component
+NHS_SERVICE=generic-component
 
 function check_env {
   if [[ -z "${NHS_ENVIRONMENT}" ]]; then

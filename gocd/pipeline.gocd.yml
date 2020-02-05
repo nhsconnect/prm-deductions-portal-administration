@@ -21,7 +21,7 @@ common:
             - ./tasks wait_ecs
 
 pipelines:
-  "prm-deductions-pds-adaptor":
+  "prm-deductions-generic-component":
     group: deductions
     label_template: "${git[:8]}"
     materials:
@@ -99,21 +99,18 @@ pipelines:
                       - -c
                       - ./tasks test_docker
 
-  "prm-deductions-pds-adaptor.dev":
+  "prm-deductions-generic-component.dev":
     group: deductions
     label_template: "${git[:8]}"
     materials:
       git:
         type: configrepo
       app:
-        pipeline: prm-deductions-pds-adaptor
+        pipeline: prm-deductions-generic-component
         stage: test_docker
       base_infra:
         pipeline: prm-deductions-infra
         stage: deploy_dev
-      mhs:
-        pipeline: prm-mhs-infra-opentest
-        stage: deploy #FIXME: should depend on test, but tests are failing now
     environment_variables:
       NHS_ENVIRONMENT: dev
     stages:

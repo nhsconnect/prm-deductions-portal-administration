@@ -3,9 +3,9 @@ locals {
   zone_id = data.aws_ssm_parameter.root_zone_id.value
 }
 
-resource "aws_route53_record" "pds-adaptor-r53-record" {
+resource "aws_route53_record" "r53-record" {
   zone_id = local.zone_id
-  name    = "${var.environment}.pds-adaptor"
+  name    = "${var.environment}.${var.component_name}"
   type    = "CNAME"
   ttl     = "300"
   records = [local.deductions_private_alb_dns]
