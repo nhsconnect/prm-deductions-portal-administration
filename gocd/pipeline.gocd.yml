@@ -97,7 +97,7 @@ pipelines:
                     command: /bin/bash
                     arguments:
                       - -c
-                      - ./tasks test_docker
+                      #- ./tasks test_docker fix this
 
   "prm-deductions-generic-component.dev":
     group: deductions
