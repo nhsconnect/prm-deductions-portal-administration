@@ -97,6 +97,7 @@ pipelines:
                     command: /bin/bash
                     arguments:
                       - -c
+                      - echo "Put Docker Test Here"
                       #- ./tasks test_docker fix this
 
   "prm-deductions-generic-component.dev":
