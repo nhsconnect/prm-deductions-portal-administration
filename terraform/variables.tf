@@ -25,3 +25,5 @@ variable "task_host_port" {}
 variable "service_container_port" {}
 variable "service_container_name" {}
 variable "service_desired_count" {}
+
+variable "alb_deregistration_delay" {}

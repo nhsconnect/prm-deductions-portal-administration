@@ -4,7 +4,7 @@ resource "aws_alb_target_group" "alb-tg" {
   protocol    = "HTTP"
   vpc_id      = data.aws_ssm_parameter.deductions_private_vpc_id.value
   target_type = "ip"
-  deregistration_delay = var.pds_deregistration_delay
+  deregistration_delay = var.alb_deregistration_delay
 
   health_check {
     healthy_threshold   = 3
