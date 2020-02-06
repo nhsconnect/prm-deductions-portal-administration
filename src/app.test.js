@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { message } from './api/health';
 import app from './app';
+import config from './config';
 
 jest.mock('./config/logging');
 jest.mock('express-winston', () => ({
@@ -14,7 +15,7 @@ describe('app', () => {
       request(app)
         .get('/health')
         .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200, message)
+        .expect(200, { ...message, node_env: config.nodeEnv })
         .end(done);
     });
   });
