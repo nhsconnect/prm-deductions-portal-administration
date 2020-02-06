@@ -132,15 +132,10 @@ case "${command}" in
       dojo -c Dojofile-infra "./tasks _wait_ecs"
       ;;
   _smoke_test)
-      AWS_ACCOUNT_ID=$(aws sts get-caller-identity | jq -r .Account)
-      auth_token=$(get_aws_secret "/NHS/$NHS_ENVIRONMENT-${AWS_ACCOUNT_ID}/pds-adaptor/authorization_keys")
-      curl --fail -X GET "http://$NHS_ENVIRONMENT.pds-adaptor.patient-deductions.nhs.uk/patient/9658218865" \
-        -H "accept: application/json" \
-        -H "Authorization: ${auth_token}" | grep 'BARTON-UPON-HUMBER'
+      npx jest src/smoke.test.js
       ;;
   smoke_test)
-      check_env
-      dojo -c Dojofile-infra "./tasks _smoke_test"
+      dojo "./tasks _smoke_test"
       ;;
   *)
       echo "Invalid command: '${command}'"
