@@ -19,7 +19,7 @@ resource "aws_ecs_service" "ecs-service" {
 
   load_balancer {
     target_group_arn = local.alb_tg_arn
-    container_name   = var.service_container_name
-    container_port   = var.service_container_port
+    container_name   = "${var.component_name}-container"
+    container_port   = var.port
   }
 }
