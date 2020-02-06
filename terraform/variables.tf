@@ -7,8 +7,6 @@ variable "environment" {}
 
 variable "component_name" {}
 
-variable "task_execution_role" {}
-
 variable "task_image_name" {}
 variable "task_image_tag" {}
 variable "task_cpu" {}

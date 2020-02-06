@@ -1,8 +1,6 @@
 environment          = "test"
 component_name       = "generic-component"
 
-task_execution_role  = "ecsTaskExecutionRole"
-
 task_cpu             = 256
 task_memory          = 512
 port                 = 3000
