@@ -132,7 +132,7 @@ case "${command}" in
       dojo -c Dojofile-infra "./tasks _wait_ecs"
       ;;
   _smoke_test)
-      npx jest src/smoke.test.js
+      npm run test-smoke
       ;;
   smoke_test)
       dojo "./tasks _smoke_test"
