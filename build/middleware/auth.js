@@ -1,13 +1,13 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.checkIsAuthenticated = void 0;
 
 var _logging = _interopRequireDefault(require("../config/logging"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var checkIsAuthenticated = function checkIsAuthenticated(req, res, next) {
   var validAuthorizationKeys = process.env.AUTHORIZATION_KEYS ? process.env.AUTHORIZATION_KEYS.split(',') : [];

@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -10,8 +12,6 @@ var _winston = require("winston");
 var _traverse = _interopRequireDefault(require("traverse"));
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var OBFUSCATED_VALUE = '********';
 var SECRET_KEYS = ['passcode', 'data'];
