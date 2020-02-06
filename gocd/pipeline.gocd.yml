@@ -131,4 +131,4 @@ pipelines:
                     command: /bin/bash
                     arguments:
                       - -c
-                      - ./tasks smoke_pds
+                      - ./tasks smoke_test
