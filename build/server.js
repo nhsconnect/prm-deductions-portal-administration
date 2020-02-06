@@ -1,11 +1,13 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 var _app = _interopRequireDefault(require("./app"));
+
+var _config = require("./config");
 
 var _logging = _interopRequireDefault(require("./config/logging"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-_app["default"].listen(3000, function () {
-  return _logging["default"].info('Listening on port 3000');
+_app["default"].listen(_config.portNumber, function () {
+  return _logging["default"].info("Listening on port ".concat(_config.portNumber));
 });

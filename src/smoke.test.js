@@ -1,6 +1,6 @@
-import config from "./config";
+import config from './config';
 import axios from 'axios';
-import { message } from "./api/health";
+import { message } from './api/health';
 
 describe('Smoke test', () => {
   it('health endpoint returns matching data', async () => {
