@@ -1,11 +1,8 @@
 locals {
     task_execution_role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.environment}-${var.component_name}-EcsTaskRole"
     task_ecr_url                 = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com"
-    task_log_group               = "/nhs/deductions/${var.environment}-${data.aws_caller_identity.current.account_id}/${var.task_family}"
+    task_log_group               = "/nhs/deductions/${var.environment}-${data.aws_caller_identity.current.account_id}/${var.component_name}"
     environment_variables        = [
-      { name = "PDS_ASID", value = data.aws_ssm_parameter.pds_asid.value },
-      { name = "DEDUCTIONS_ASID", value = data.aws_ssm_parameter.deductions_asid.value },
-      { name = "MHS_URL", value = data.aws_ssm_parameter.mhs_url.value },
       { name = "NODE_ENV", value = var.environment },
     ]
     secret_environment_variables = [
