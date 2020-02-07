@@ -3,7 +3,7 @@ data "aws_iam_policy_document" "ecs-assume-role-policy" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "Service"
+      type = "Service"
       identifiers = [
         "ecs-tasks.amazonaws.com"
       ]
@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "ecs-assume-role-policy" {
   }
 }
 
-resource "aws_iam_role" "component-ecs-role" {
+resource "aws_iam_role" "administration-portal-ecs-role" {
   name               = "${var.environment}-${var.component_name}-EcsTaskRole"
   assume_role_policy = data.aws_iam_policy_document.ecs-assume-role-policy.json
   description        = "Role assumed by ${var.component_name} ECS task"
