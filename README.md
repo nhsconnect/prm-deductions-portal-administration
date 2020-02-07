@@ -1,1 +1,1 @@
-# prm-deductions-component-template
+# prm-deductions-portal-administration

@@ -5,7 +5,7 @@ const config = {
   url:
     process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'test'
       ? `http://127.0.0.1:${portNumber}`
-      : `http://${process.env.NODE_ENV}.generic-component.patient-deductions.nhs.uk`
+      : `http://${process.env.NODE_ENV}.administration-portal.patient-deductions.nhs.uk`
 };
 
 export default config;
