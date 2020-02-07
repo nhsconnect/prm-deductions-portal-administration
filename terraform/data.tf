@@ -5,7 +5,7 @@ data "aws_ssm_parameter" "root_zone_id" {
 }
 
 data "aws_ssm_parameter" "authorization_keys" {
-  name = "/NHS/${var.environment}-${data.aws_caller_identity.current.account_id}/pds-adaptor/authorization_keys"
+  name = "/NHS/${var.environment}-${data.aws_caller_identity.current.account_id}/administration-portal/authorization_keys"
 }
 
 data "aws_ssm_parameter" "deductions_private_ecs_cluster_id" {
