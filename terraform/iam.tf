@@ -44,6 +44,6 @@ resource "aws_iam_policy" "ssm_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_police_attach" {
-  role       = aws_iam_role.component-ecs-role.name
+  role       = aws_iam_role.${var.component_name}-ecs-role.name
   policy_arn = aws_iam_policy.ssm_policy.arn
 }
