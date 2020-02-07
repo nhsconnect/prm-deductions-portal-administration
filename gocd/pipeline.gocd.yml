@@ -21,9 +21,9 @@ common:
             - ./tasks wait_ecs
 
 pipelines:
-  "prm-deductions-generic-component":
+  'prm-deductions-administration-portal':
     group: deductions
-    label_template: "${git[:8]}"
+    label_template: '${git[:8]}'
     materials:
       git:
         type: configrepo
@@ -100,14 +100,14 @@ pipelines:
                       - echo "Put Docker Test Here"
                       #- ./tasks test_docker fix this
 
-  "prm-deductions-generic-component.dev":
+  'prm-deductions-administration-portal.dev':
     group: deductions
-    label_template: "${git[:8]}"
+    label_template: '${git[:8]}'
     materials:
       git:
         type: configrepo
       app:
-        pipeline: prm-deductions-generic-component
+        pipeline: prm-deductions-administration-portal
         stage: test_docker
       base_infra:
         pipeline: prm-deductions-infra
