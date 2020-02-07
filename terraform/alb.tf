@@ -32,7 +32,7 @@ resource "aws_alb_listener" "alb-listener" {
   }
 }
 
-resource "aws_alb_listener_rule" "pds-adaptor-alb-listener-rule" {
+resource "aws_alb_listener_rule" "administration-portal-alb-listener-rule" {
   listener_arn = aws_alb_listener.alb-listener.arn
   priority     = 200
 
