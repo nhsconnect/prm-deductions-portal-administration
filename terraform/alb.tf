@@ -1,9 +1,9 @@
 resource "aws_alb_target_group" "alb-tg" {
-  name        = "${var.environment}-${var.component_name}-tg"
-  port        = var.port
-  protocol    = "HTTP"
-  vpc_id      = data.aws_ssm_parameter.deductions_private_vpc_id.value
-  target_type = "ip"
+  name                 = "${var.environment}-${var.component_name}-tg"
+  port                 = var.port
+  protocol             = "HTTP"
+  vpc_id               = data.aws_ssm_parameter.deductions_private_vpc_id.value
+  target_type          = "ip"
   deregistration_delay = var.alb_deregistration_delay
 
   health_check {
@@ -22,27 +22,26 @@ resource "aws_alb_listener" "alb-listener" {
   protocol          = "HTTP"
 
   default_action {
-    type = "fixed-response"
+    type = "redirect"
 
-    fixed_response {
-      content_type = "text/plain"
-      message_body = "Error"
-      status_code  = "501"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
     }
   }
 }
 
-resource "aws_alb_listener_rule" "administration-portal-alb-listener-rule" {
-  listener_arn = aws_alb_listener.alb-listener.arn
-  priority     = 300
+resource "aws_alb_listener" "alb-listener-https" {
+  load_balancer_arn = data.terraform_remote_state.prm-deductions-infra.outputs.deductions_private_alb_arn
+  port              = "443"
+  protocol          = "HTTPS"
 
-  action {
-    type             = "forward"
+  ssl_policy      = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn = aws_acm_certificate_validation.default.certificate_arn
+
+  default_action {
     target_group_arn = aws_alb_target_group.alb-tg.arn
-  }
-
-  condition {
-    field  = "host-header"
-    values = ["${var.environment}.${var.component_name}.patient-deductions.nhs.uk"]
+    type             = "forward"
   }
 }
