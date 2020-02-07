@@ -3,7 +3,7 @@ locals {
   zone_id = data.aws_ssm_parameter.root_zone_id.value
 }
 
-resource "aws_route53_record" "r53-record" {
+resource "aws_route53_record" "administration-portal-r53-record" {
   zone_id = local.zone_id
   name    = "${var.environment}.${var.component_name}"
   type    = "CNAME"
