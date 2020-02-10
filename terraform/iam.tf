@@ -32,6 +32,7 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
     resources = [
       "arn:aws:ecr:${var.region}:${local.account_id}:repository/deductions/${var.component_name}"
     ]
+  }
   statement {
     actions = [
       "ecr:GetAuthorizationToken"
@@ -40,7 +41,6 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
     resources = [
             "*"
     ] 
-  }
   }
 }
 
