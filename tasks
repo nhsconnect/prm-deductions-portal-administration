@@ -79,6 +79,20 @@ case "${command}" in
   test)
       dojo "./tasks _test"
       ;;
+   _coverage)
+      npm install
+      npm run test-coverage
+      ;;
+  coverage)
+      dojo "./tasks _coverage"
+      ;;
+  _access_test)
+      npm install
+      npm run access
+      ;;
+  access_test)
+      dojo "./tasks _access_test"
+      ;;
   _run_local)
       sleep 10
       npm run start-local-nodemon
