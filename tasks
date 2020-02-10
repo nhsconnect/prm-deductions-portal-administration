@@ -65,6 +65,7 @@ case "${command}" in
       dojo "./tasks _dep"
       ;;
   _build)
+      rm -rf build/*
       npm install
       npm run build
       ;;
@@ -110,6 +111,23 @@ case "${command}" in
       $REPOSITORY_URI:$IMAGE_TAG"
       docker push $REPOSITORY_URI:latest
       docker push $REPOSITORY_URI:$IMAGE_TAG
+      ;;
+
+  _test_docker)
+      while ! curl -i ${PORTAL_URL}; do
+        echo "Waiting for portal server endpoint at ${PORTAL_URL}"
+        sleep 1
+        ((count++))
+        if [ 30 -le $count ]; then
+          echo "Timed-out waiting for portal server at ${PORTAL_URL}"
+          exit 5
+        fi
+      done
+      ;;
+  test_docker_local)
+      export PORTAL_URL="http://${PORTAL_DOMAIN_NAME}:3000"
+      export PORTAL_DOCKER_IMAGE="${PORTAL_DOCKER_IMAGE:-$IMAGE_REPO_NAME}"
+      dojo -c Dojofile-dtest "./tasks _test_docker"
       ;;
   tf)
       check_env

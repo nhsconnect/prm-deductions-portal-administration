@@ -1,0 +1,9 @@
+version: '2'
+services:
+  default:
+    links:
+      - portal:patient-deductions.nhs.uk
+    ports:
+      - 3000:3000
+  portal:
+    image: ${PORTAL_DOCKER_IMAGE}
