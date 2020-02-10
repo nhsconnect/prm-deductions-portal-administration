@@ -78,6 +78,14 @@ case "${command}" in
   test)
       dojo "./tasks _test"
       ;;
+  _run_local)
+      sleep 10
+      npm run start-local-nodemon
+      ;;
+  run_local)
+      configure_local_envs
+      dojo -c Dojofile-compose "./tasks _run_local"
+      ;;
   build_docker_local)
       REPOSITORY_URI=$IMAGE_REPO_NAME
       COMMIT_HASH=$(git rev-parse HEAD | cut -c 1-7)
