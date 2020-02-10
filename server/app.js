@@ -1,6 +1,7 @@
 import express from 'express';
 import httpContext from 'express-http-context';
 import { errorLogger, logger as requestLogger } from 'express-winston';
+import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import example from './api/example';
 import exampleAuthenticated from './api/exampleAuthenticated';
@@ -12,6 +13,10 @@ const app = express();
 
 app.use(httpContext.middleware);
 app.use(requestLogger(options));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public/index.html'));
+});
 
 app.use('/health', healthCheck);
 

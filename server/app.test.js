@@ -29,6 +29,16 @@ describe('app', () => {
     });
   });
 
+  describe('GET /', () => {
+    it('should return a 200 status code', done => {
+      request(app)
+        .get('/')
+        .expect(200)
+        .expect('Content-Type', 'text/html; charset=UTF-8')
+        .end(done);
+    });
+  });
+
   describe('GET /exampleAuthenticated', () => {
     beforeEach(() => {
       process.env.AUTHORIZATION_KEYS = 'correct-key,other-key';
