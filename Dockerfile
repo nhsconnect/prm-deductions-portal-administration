@@ -1,8 +1,10 @@
 FROM node:11.15.0-alpine
 WORKDIR /app
 COPY package*.json ./
-COPY node_modules/ ./node_modules
 COPY build/ /app/
+
+# This should be done to avoid any platform dependent packages
+RUN npm install && npm audit --fix
 
 EXPOSE 3000
 RUN apk add --no-cache tini
