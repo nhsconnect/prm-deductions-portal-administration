@@ -13,7 +13,7 @@
     "test--watch": "jest \"^((?!(.*integration.*)|(smoke.test)).)*$\" --setupFiles dotenv/config --watch",
     "coverage": "jest --maxWorkers=1 --coverage --detectOpenHandles --forceExit --setupFiles dotenv/config",
     "build": "babel server -d build --ignore '**/*.test.js' && cp server/*.json build",
-    "start": "node build/server.js",
+    "start": "npm run build && node build/server.js",
     "start-local": "babel-node -r node_modules/dotenv/config server/server.js",
     "start-local-nodemon": "nodemon --exec babel-node -r node_modules/dotenv/config server/server.js"
   },
