@@ -72,10 +72,6 @@ pipelines:
                     stage: build
                     job: npm_install
                     source: build
-                - fetch:
-                    stage: build
-                    job: npm_install
-                    source: node_modules
                 - exec:
                     command: /bin/bash
                     arguments:
