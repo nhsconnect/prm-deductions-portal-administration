@@ -33,7 +33,7 @@ resource "aws_alb_listener" "alb-listener" {
 }
 
 resource "aws_alb_listener" "alb-listener-https" {
-  load_balancer_arn = data.terraform_remote_state.prm-deductions-infra.outputs.deductions_private_alb_arn
+  load_balancer_arn = data.aws_ssm_parameter.deductions_private_alb_arn.value
   port              = "443"
   protocol          = "HTTPS"
 
