@@ -1,47 +1,87 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Service to handle message generation for PDS communication",
+    "description": "Administration Portal",
     "version": "1.0.0",
-    "title": "PDS Adaptor"
+    "title": "Administration Portal"
   },
-  "tags": [
-    {
-      "name": "patient",
-      "description": "Retrieve patient details"
-    }
-  ],
   "paths": {
-    "/patient/{nhsNumber}": {
+    "/health": {
       "get": {
         "tags": [
-          "patient"
+          "health"
         ],
-        "summary": "Retrieves patient information by NHS number",
+        "summary": "Checks health of api",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "nhsNumber",
-            "in": "path",
-            "description": "NHS number of the patient",
-            "required": true,
-            "type": "string"
-          }
         ],
         "responses": {
           "200": {
             "description": "Successful retrieval",
             "schema": {
-              "$ref": "#/definitions/Response"
+              "$ref": "#/definitions/response"
             }
+          },
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/example": {
+      "get": {
+        "tags": [
+          "example"
+        ],
+        "summary": "hello world example api call",
+        "produces": [
+          "text/plain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful retrieval"
+          },
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/exampleAuthenticated": {
+      "get": {
+        "tags": [
+          "exampleAuthenticated"
+        ],
+        "summary": "hello world example api call with authentication",
+        "produces": [
+          "text/plain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful retrieval"
           },
           "401": {
             "description": "Authorization header missing"
           },
           "403": {
             "description": "Authorization key invalid"
+          },
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
           }
         },
         "security": [
@@ -60,13 +100,33 @@
     }
   },
   "definitions": {
-    "Response": {
+    "errorResponse": {
       "type": "object",
       "properties": {
-        "payload": {
+        "error": {
           "type": "string",
-          "description": "Response from PDS containing patient details",
-          "format": "xml"
+          "description": "error message"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version number"
+        },
+        "description": {
+          "type": "string",
+          "description": "Describes the component"
+        },
+        "status": {
+          "type": "string",
+          "description": "Tells you if the service is running"
+        },
+        "node_env": {
+          "type": "string",
+          "description": "Environment - local, dev etc."
         }
       }
     }
