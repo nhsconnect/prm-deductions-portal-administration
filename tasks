@@ -96,11 +96,10 @@ case "${command}" in
       ;;
   _run_local)
       sleep 10
-      npm run start-local-nodemon
+      npm run start
       ;;
   run_local)
-      configure_local_envs
-      dojo -c Dojofile-compose "./tasks _run_local"
+      dojo "./tasks _run_local"
       ;;
   build_docker_local)
       REPOSITORY_URI=$IMAGE_REPO_NAME
