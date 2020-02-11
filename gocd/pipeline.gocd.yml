@@ -145,3 +145,22 @@ pipelines:
                     arguments:
                       - -c
                       - ./tasks smoke_test
+  'prm-deductions-administration-portal.test':
+    group: deductions
+    label_template: '${git[:8]}'
+    materials:
+      git:
+        type: configrepo
+      dev_env:
+        pipeline: prm-deductions-administration-portal.dev
+        stage: deploy
+      base_infra:
+        pipeline: prm-deductions-infra
+        stage: deploy_test
+    environment_variables:
+      NHS_ENVIRONMENT: test
+    stages:
+      - deploy:
+          clean_workspace: true
+          jobs:
+            deploy: *deploy_job
