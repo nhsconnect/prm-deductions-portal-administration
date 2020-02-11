@@ -24,24 +24,24 @@ Link [to dev site - health ](https://dev.administration-portal.patient-deduction
 
 ### Node Goals
 
--- To be filled --
-
-| Goal         | Description                                                                           |
-| ------------ | ------------------------------------------------------------------------------------- |
-| clean        | Removes the current build folder                                                      |
-| build        | Builds the react app (`src/` and `/public`) into a `build/` folder                    |
-| start:react  | Opens a live version of the React app in a browser (port: `3000`)                     |
-| serve:react  | Serves the React static pages on port 5000                                            |
-| start:server | Builds the react app before launching the Express server on port `3000` using nodemon |
-| start        | Builds the react app before launching the Express server on port `3000`               |
-| test:react   | Runs the React app tests                                                              |
-| test:server  | Runs the Express server tests (`/server`)                                             |
-| test         | Runs both the React app tests and the Express server tests                            |
-| coverage     | Runs all the tests and collects coverage metrics                                      |
-| eject        | Runs `react-scripts eject`                                                            |
-| access       | Runs the accessibility tests, server must be running on port `5000`                   |
+| Goal           | Description                                                                |
+| -------------- | -------------------------------------------------------------------------- |
+| lint           | Lints the server/ files                                                    |
+| test-unit      | Runs unit tests and excludes the smoke test                                |
+| test           | Runs all the tests                                                         |
+| test-smoke     | Runs the smoke test (also involves running build script concurrently)      |
+| test--watch    | Runs the unit tests, and watches the files to rerun if neccessary          |
+| test-coverage  | Runs all the tests except for the smoke test and collects coverage metrics |
+| clean          | Removes the current build folder                                           |
+| build:frontend | Copies the server/public/index.html to the build/ folder                   |
+| build:server   | Uses babel build script for code within /server folder                     |
+| build          | Runs the build:frontend and build:server scripts                           |
+| start          | Runs the build script and node build/server.js                             |
+| start-local    | Babel start local script                                                   |
+| start-local-nodemon | Watches files and starts                                                |
+| test-access | Accessibility test using pa11yci                                              |
+| access | Runs build scripts then accessibility test scripts                                |
 
 ## Development
 
 ### Run locally
-
