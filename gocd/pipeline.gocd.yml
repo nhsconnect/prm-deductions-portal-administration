@@ -105,17 +105,13 @@ pipelines:
           jobs:
             test:
               resources:
-                - dev
-                - mhs
-              environment_variables:
-                NHS_ENVIRONMENT: dev
+                - docker
               tasks:
                 - exec:
                     command: /bin/bash
                     arguments:
                       - -c
-                      - echo "Put Docker Test Here"
-                      #- ./tasks test_docker fix this
+                      - ./tasks test_docker
 
   'prm-deductions-administration-portal.dev':
     group: deductions

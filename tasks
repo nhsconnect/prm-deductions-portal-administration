@@ -5,6 +5,7 @@ set -Eeo pipefail
 AWS_DEFAULT_REGION=eu-west-2
 IMAGE_REPO_NAME=deductions/administration-portal
 NHS_SERVICE=administration-portal
+PORTAL_DOMAIN_NAME=portal
 
 function check_env {
   if [[ -z "${NHS_ENVIRONMENT}" ]]; then

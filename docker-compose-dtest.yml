@@ -2,7 +2,7 @@ version: '2'
 services:
   default:
     links:
-      - portal:patient-deductions.nhs.uk
+      - portal:portal
     ports:
       - 3000:3000
   portal:
