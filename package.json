@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "clean": "rm -rf build",
+    "build:frontend": "cd build && rm -rf public && mkdir public && cd .. && cp public/index.html build/public && echo \"\n-- Copied public/index.html to build folder --\n\"",
     "lint": "eslint server/ --fix",
     "test-unit": "jest \"^((?!(.*integration.*)|(smoke.test)).)*$\" --setupFiles dotenv/config",
     "test": "npm run lint && npm run test-unit && npm run test-smoke",
@@ -13,7 +14,8 @@
     "test-smoke": "concurrently --kill-others \"npm run build && PUBLIC_URL=http://localhost:3000 node build/server.js\"  \"npx jest server/smoke.test.js\" -s first",
     "test--watch": "jest \"^((?!(.*integration.*)|(smoke.test)).)*$\" --setupFiles dotenv/config --watch",
     "test-coverage": "jest \"^((?!smoke.test).)*$\" --collectCoverage",
-    "build": "babel server -d build --ignore '**/*.test.js' && cp server/*.json build",
+    "build:server": "babel server -d build --ignore '**/*.test.js' && cp server/*.json build",
+    "build": "npm run build:server && npm run build:frontend",
     "start": "npm run build && node build/server.js",
     "start-local": "babel-node -r node_modules/dotenv/config server/server.js",
     "start-local-nodemon": "nodemon --exec babel-node -r node_modules/dotenv/config server/server.js",
