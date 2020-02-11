@@ -5,12 +5,10 @@
   "main": "server/server.js",
   "scripts": {
     "clean": "rm -rf build",
-    "build:frontend": "cd build && rm -rf public && mkdir public && cd .. && cp public/index.html build/public && echo \"\n-- Copied public/index.html to build folder --\n\"",
+    "build:frontend": "cd build && rm -rf public && mkdir public && cd .. && cp server/public/index.html build/public && echo \"\n-- Copied public/index.html to build folder --\n\"",
     "lint": "eslint server/ --fix",
     "test-unit": "jest \"^((?!(.*integration.*)|(smoke.test)).)*$\" --setupFiles dotenv/config",
     "test": "npm run build && npm run lint && npm run test-unit && npm run test-smoke",
-    "test-integration": "jest \"server/.*\\integration.test\\.js\" --detectOpenHandles --forceExit --setupFiles dotenv/config",
-    "itest": "npm run lint && npm run integration",
     "test-smoke": "concurrently --kill-others \"npm run build && PUBLIC_URL=http://localhost:3000 node build/server.js\"  \"npx jest server/smoke.test.js\" -s first",
     "test--watch": "jest \"^((?!(.*integration.*)|(smoke.test)).)*$\" --setupFiles dotenv/config --watch",
     "test-coverage": "npm run build && jest \"^((?!smoke.test).)*$\" --collectCoverage",
