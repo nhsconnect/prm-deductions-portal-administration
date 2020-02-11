@@ -16,21 +16,21 @@ resource "aws_alb_target_group" "alb-tg" {
   }
 }
 
-resource "aws_alb_listener" "alb-listener" {
-  load_balancer_arn = data.aws_ssm_parameter.deductions_private_alb_arn.value
-  port              = "80"
-  protocol          = "HTTP"
+# resource "aws_alb_listener" "alb-listener" {
+#   load_balancer_arn = data.aws_ssm_parameter.deductions_private_alb_arn.value
+#   port              = "80"
+#   protocol          = "HTTP"
 
-  default_action {
-    type = "redirect"
+#   default_action {
+#     type = "redirect"
 
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
+#     redirect {
+#       port        = "443"
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }
 
 resource "aws_alb_listener" "alb-listener-https" {
   load_balancer_arn = data.aws_ssm_parameter.deductions_private_alb_arn.value
