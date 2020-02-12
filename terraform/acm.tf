@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "administration-portal-certificate" {
-  domain_name       = "${var.environment}.administration-portal.patient-deductions.nhs.uk"
+  domain_name       = "${aws_route53_record.administration-portal-r53-record.name}.patient-deductions.nhs.uk"
   validation_method = "DNS"
 }
 

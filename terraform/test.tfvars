@@ -1,5 +1,6 @@
 environment    = "test"
 component_name = "administration-portal"
+dns_name       = "admin"
 
 task_cpu    = 256
 task_memory = 512

@@ -2,7 +2,7 @@
 
 Administration Portal is a web application used for admin staff - as part of Service Monitoring and Administration.
 
-Link [to dev site - health ](https://dev.administration-portal.patient-deductions.nhs.uk/health)
+Link [to dev site - health ](https://dev.admin.patient-deductions.nhs.uk/health)
 
 ## Directories
 
