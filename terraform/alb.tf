@@ -16,21 +16,20 @@ resource "aws_alb_target_group" "alb-tg" {
   }
 }
 
-# resource "aws_alb_listener" "alb-listener" {
-#   load_balancer_arn = data.aws_ssm_parameter.deductions_private_alb_arn.value
-#   port              = "80"
-#   protocol          = "HTTP"
+resource "aws_alb_listener_rule" "alb-listener-rule" {
+  listener_arn = aws_ssm_parameter.deductions_private_alb_httpl_arn.value
+  priority     = 200
 
-#   default_action {
-#     type = "redirect"
+  action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.alb-tg.arn
+  }
 
-#     redirect {
-#       port        = "443"
-#       protocol    = "HTTPS"
-#       status_code = "HTTP_301"
-#     }
-#   }
-# }
+  condition {
+    field  = "host-header"
+    values = ["${var.environment}.${var.component_name}.patient-deductions.nhs.uk"]
+  }
+}
 
 resource "aws_alb_listener" "alb-listener-https" {
   load_balancer_arn = data.aws_ssm_parameter.deductions_private_alb_arn.value

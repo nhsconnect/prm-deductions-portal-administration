@@ -32,3 +32,7 @@ data "aws_ssm_parameter" "deductions_private_alb_arn" {
   name = "/nhs/${var.environment}/deductions_private_alb_arn"
 }
 
+data "aws_ssm_parameter" "deductions_private_alb_httpl_arn" {
+  name = "/nhs/${var.environment}/deductions_private_alb_httpl_arn"
+}
+
