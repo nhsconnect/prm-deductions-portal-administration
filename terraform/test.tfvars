@@ -1,5 +1,5 @@
 environment    = "test"
-component_name = "admin"
+component_name = "administration-portal"
 
 task_cpu    = 256
 task_memory = 512
