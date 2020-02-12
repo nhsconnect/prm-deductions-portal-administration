@@ -164,3 +164,15 @@ pipelines:
           clean_workspace: true
           jobs:
             deploy: *deploy_job
+      - test:
+          clean_workspace: true
+          jobs:
+            smoke:
+              resources:
+                - docker
+              tasks:
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks smoke_test
