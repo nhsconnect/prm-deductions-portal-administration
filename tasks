@@ -141,6 +141,7 @@ case "${command}" in
   test_docker)
       export PORTAL_URL="http://${PORTAL_DOMAIN_NAME}:3000"
       export PORTAL_DOCKER_IMAGE="${PORTAL_DOCKER_IMAGE:-$IMAGE_REPO_NAME}"
+      docker_login
       dojo -c Dojofile-dtest "./tasks _test_docker"
       ;;
   tf)
