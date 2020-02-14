@@ -22,4 +22,7 @@ resource "aws_ecs_service" "ecs-service" {
     container_name   = "${var.component_name}-container"
     container_port   = var.port
   }
+
+  depends_on = [aws_alb_target_group.alb-tg, aws_alb_listener_rule.alb-listener-rule, 
+                    aws_alb_listener.alb-listener-https]
 }
