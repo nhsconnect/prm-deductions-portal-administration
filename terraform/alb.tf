@@ -18,7 +18,7 @@ resource "aws_alb_target_group" "alb-tg" {
 
 resource "aws_alb_listener_rule" "alb-http-listener-rule" {
   listener_arn = data.aws_ssm_parameter.deductions_private_alb_httpl_arn.value
-  priority     = 209
+  priority     = 301
 
   action {
     type = "redirect"
@@ -38,7 +38,7 @@ resource "aws_alb_listener_rule" "alb-http-listener-rule" {
 
 resource "aws_alb_listener_rule" "alb-https-listener-rule" {
   listener_arn = data.aws_ssm_parameter.deductions_private_alb_httpsl_arn.value
-  priority     = 101
+  priority     = 302
 
   action {
     type             = "forward"
