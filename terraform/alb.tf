@@ -32,7 +32,7 @@ resource "aws_alb_listener_rule" "alb-http-listener-rule" {
 
   condition {
     field  = "host-header"
-    values = [aws_acm_certificate.administration-portal-certificate.domain_name]
+    values = ["${var.environment}.${var.dns_name}.patient-deductions.nhs.uk"]
   }
 }
 
