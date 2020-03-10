@@ -4,7 +4,7 @@ COPY package*.json ./
 COPY build/ /app/
 
 # This should be done to avoid any platform dependent packages
-RUN npm install && npm audit --fix
+RUN npm install
 
 EXPOSE 3000
 RUN apk add --no-cache tini
