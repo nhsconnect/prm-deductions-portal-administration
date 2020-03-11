@@ -11,7 +11,7 @@
     "test--watch": "jest \"^((?!smoke.test).)*$\" --setupFiles dotenv/config --watch",
     "test-coverage": "jest \"^((?!smoke.test).)*$\" --collectCoverage",
     "test-access": "npm install --no-save puppeteer && wait-on http-get://127.0.0.1:3000 && pa11y-ci --config '.pa11yci.json'",
-    "access": "concurrently --kill-others \"npm run build &&  PUBLIC_URL=http://localhost:3000 node build/server.js\" \"npm run test-access\" -s first",
+    "access": "concurrently --kill-others \"npm run build && PUBLIC_URL=http://localhost:3000 node build/server.js\" \"npm run test-access\" -s first",
     "clean": "rm -rf build",
     "build:frontend": "cd build && rm -rf public && mkdir public && cd .. && cp server/public/index.html build/public && echo \"\n-- Copied public/index.html to build folder --\n\"",
     "build:server": "babel server -d build --ignore '**/*.test.js' && cp server/*.json build",
@@ -30,6 +30,7 @@
     "@babel/node": "^7.6.3",
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/preset-env": "^7.6.3",
+    "acorn": "^7.1.1",
     "concurrently": "^5.1.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.7.0",
@@ -42,6 +43,7 @@
     "pa11y-ci": "^2.3.0",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2",
+    "typescript": "^3.8.3",
     "wait-on": "^4.0.0"
   },
   "dependencies": {
