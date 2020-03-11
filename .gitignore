@@ -115,3 +115,4 @@ dist
 # Local .terraform directories
 **/.terraform/*
 /terraform/nhs_deployment.tfplan
+*.dojo
