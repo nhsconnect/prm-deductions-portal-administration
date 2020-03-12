@@ -8,13 +8,9 @@
   "paths": {
     "/health": {
       "get": {
-        "tags": [
-          "health"
-        ],
+        "tags": ["health"],
         "summary": "Checks health of api",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Successful retrieval",
@@ -33,13 +29,9 @@
     },
     "/example": {
       "get": {
-        "tags": [
-          "example"
-        ],
+        "tags": ["example"],
         "summary": "hello world example api call",
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "Successful retrieval"
@@ -58,15 +50,11 @@
         ]
       }
     },
-    "/exampleAuthenticated": {
+    "/example-authenticated": {
       "get": {
-        "tags": [
-          "exampleAuthenticated"
-        ],
+        "tags": ["example-authenticated"],
         "summary": "hello world example api call with authentication",
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "Successful retrieval"

@@ -4,9 +4,10 @@ import { errorLogger, logger as requestLogger } from 'express-winston';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import example from './api/example';
-import exampleAuthenticated from './api/exampleAuthenticated';
+import authenticatedExample from './api/example-authenticated';
 import healthCheck from './api/health';
 import { options } from './config/logging';
+import { authenticateRequest } from './middleware/auth';
 import swaggerDocument from './swagger.json';
 
 const app = express();
@@ -21,7 +22,7 @@ app.get('/', (req, res) => {
 app.use('/health', healthCheck);
 
 app.use('/example', example);
-app.use('/exampleAuthenticated', exampleAuthenticated);
+app.use('/example-authenticated', authenticateRequest, authenticatedExample);
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
