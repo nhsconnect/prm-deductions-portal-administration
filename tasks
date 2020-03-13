@@ -9,7 +9,6 @@ set -Eeo pipefail
 AWS_DEFAULT_REGION=eu-west-2
 IMAGE_REPO_NAME=deductions/administration-portal
 export NHS_SERVICE=administration-portal
-PORTAL_DOMAIN_NAME=portal
 
 ####################################
 # Instance (Environment) Variables #
@@ -27,6 +26,33 @@ function check_nhs_service {
     echo "Must set NHS_SERVICE"
     exit 1
   fi
+}
+
+function configure_service_url {
+  if [[ -z "${NHS_ENVIRONMENT}" ]]; then
+    export SERVICE_URL=http://${NHS_SERVICE}:3000
+  else
+    export SERVICE_URL=https://${NHS_ENVIRONMENT}.${NHS_SERVICE}.patient-deductions.nhs.uk
+  fi
+}
+
+function configure_local_envs {
+  export AUTHORIZATION_KEYS="correct-key,other-key"
+  export REPOSITORY_URI=$IMAGE_REPO_NAME
+  export NODE_ENV=local
+  configure_service_url
+}
+
+function get_aws_account_id {
+     AWS_ACCOUNT_ID=$(dojo -c Dojofile-infra "aws sts get-caller-identity | jq -r .Account")
+ }
+
+function configure_aws_service_auth_keys {
+    check_env
+    get_aws_account_id
+    parameter_name="/NHS/${NHS_ENVIRONMENT}-${AWS_ACCOUNT_ID}/${NHS_SERVICE}/authorization_keys"
+    echo "${parameter_name}"
+    export AUTHORIZATION_KEYS=$(dojo -c Dojofile-infra "aws ssm get-parameter --with-decryption --region ${AWS_DEFAULT_REGION} --name  ${parameter_name} | jq -r .Parameter.Value")
 }
 
 function get_aws_ssm_secret {
@@ -96,15 +122,28 @@ function docker_login {
   eval $(dojo -c Dojofile-infra "aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION")
 }
 
-function get_aws_secret {
-  secret_id=$1
-  json=$(aws ssm get-parameter --with-decryption --region $AWS_DEFAULT_REGION --name $secret_id)
-  if [ $? != 0 ]; then
-    >&2 echo "Failed to obtain AWS secret: $secret_id"
-    exit 5
-  fi
-  echo $json | jq -r ".Parameter.Value"
+function configure_docker_repository_uri {
+  docker_login
+  get_aws_account_id
+  export REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$IMAGE_REPO_NAME
 }
+
+function get_latest_commit_hash {
+  export COMMIT_HASH=$(git rev-parse HEAD | cut -c 1-7)
+}
+
+function build_docker_image {
+  echo Build started on `date`
+  get_latest_commit_hash
+  IMAGE_TAG=${COMMIT_HASH}
+  echo Building the Docker image...
+  docker build -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG .
+  echo Build completed on `date`
+}
+
+###########
+## TASKS ##
+###########
 
 command="$1"
 case "${command}" in
@@ -147,69 +186,47 @@ case "${command}" in
   test)
       dojo "./tasks _test"
       ;;
-   _coverage)
+  _test_integration)
       npm install
-      npm run test-coverage
+      npm run test:integration
       ;;
-  coverage)
-      dojo "./tasks _coverage"
+  test_integration)
+      configure_local_envs
+      dojo -c Dojofile-itest "./tasks _test_integration"
       ;;
-  _access_test)
+  _test_functional)
+      npm install
+      npm run test:functional
+      ;;
+  test_functional)
+      configure_aws_service_auth_keys
+      configure_service_url
+      dojo "./tasks _test_functional"
+      ;;
+  _test_accessibility)
       npm install
       npm run access
       ;;
-  access_test)
-      dojo "./tasks _access_test"
+  test_accessibility)
+      dojo "./tasks _test_accessibility"
       ;;
-  _run_local)
-      sleep 10
-      npm run start
+   _test_coverage)
+      npm install
+      npm run test:coverage
       ;;
-  run_local)
-      dojo "./tasks _run_local"
+  test_coverage)
+      configure_local_envs
+      dojo "./tasks _test_coverage"
       ;;
   build_docker_local)
-      REPOSITORY_URI=$IMAGE_REPO_NAME
-      COMMIT_HASH=$(git rev-parse HEAD | cut -c 1-7)
-      IMAGE_TAG=${COMMIT_HASH}
-      echo Build started on `date`
-      echo Building the Docker image...
-      docker build -t $REPOSITORY_URI:latest .
-      docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
-      echo Build completed on `date`
+      configure_local_envs
+      build_docker_image
       ;;
   build_docker)
-      docker_login
-      AWS_ACCOUNT_ID=$(dojo -c Dojofile-infra "aws sts get-caller-identity | jq -r .Account")
-      REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$IMAGE_REPO_NAME
-      ./tasks build_docker_local
-      COMMIT_HASH=$(git rev-parse HEAD | cut -c 1-7)
-      IMAGE_TAG=${COMMIT_HASH}
-      docker tag $IMAGE_REPO_NAME $REPOSITORY_URI:$IMAGE_TAG
-      docker tag $IMAGE_REPO_NAME $REPOSITORY_URI:latest
-      echo "Pushing the Docker image...
-      $REPOSITORY_URI:latest
-      $REPOSITORY_URI:$IMAGE_TAG"
-      docker push $REPOSITORY_URI:latest
-      docker push $REPOSITORY_URI:$IMAGE_TAG
-      ;;
-
-  _test_docker)
-      while ! curl -i ${PORTAL_URL}; do
-        echo "Waiting for portal server endpoint at ${PORTAL_URL}"
-        sleep 1
-        ((count++))
-        if [ 30 -le $count ]; then
-          echo "Timed-out waiting for portal server at ${PORTAL_URL}"
-          exit 5
-        fi
-      done
-      ;;
-  test_docker)
-      export PORTAL_URL="http://${PORTAL_DOMAIN_NAME}:3000"
-      export PORTAL_DOCKER_IMAGE="${PORTAL_DOCKER_IMAGE:-$IMAGE_REPO_NAME}"
-      docker_login
-      dojo -c Dojofile-dtest "./tasks _test_docker"
+      configure_docker_repository_uri
+      build_docker_image
+      echo "Pushing the Docker image... $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG"
+      docker push $REPOSITORY_URI
       ;;
   tf)
       check_env
@@ -233,18 +250,11 @@ case "${command}" in
       aws ecs wait services-stable \
         --region $AWS_DEFAULT_REGION \
         --cluster $NHS_ENVIRONMENT-deductions-private-ecs-cluster \
-        --services $NHS_ENVIRONMENT-administration-portal-service
+        --service $NHS_ENVIRONMENT-${NHS_SERVICE}-service
       ;;
   wait_ecs)
       check_env
       dojo -c Dojofile-infra "./tasks _wait_ecs"
-      ;;
-  _smoke_test)
-      npm install
-      npm run test-smoke
-      ;;
-  smoke_test)
-      dojo "./tasks _smoke_test"
       ;;
   *)
       echo "Invalid command: '${command}'"

@@ -1,0 +1,111 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Administration Portal",
+    "version": "1.0.1",
+    "title": "Administration Portal"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Returns basic page",
+        "produces": ["html"],
+        "responses": {
+          "200": {
+            "description": "Successful retrieval"
+          },
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Checks health of api",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Successful retrieval",
+            "schema": {
+              "$ref": "#/definitions/response"
+            }
+          },
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "/error": {
+    "get": {
+      "tags": ["error"],
+      "summary": "throws internal error for test purposes",
+      "produces": ["text/plain"],
+      "responses": {
+        "500": {
+          "description": "Error",
+          "schema": {
+            "$ref": "#/definitions/errorResponse"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "errorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "error message"
+        }
+      }
+    },
+    "genericResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "description": "message"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version number"
+        },
+        "description": {
+          "type": "string",
+          "description": "Describes the component"
+        },
+        "status": {
+          "type": "string",
+          "description": "Tells you if the service is running"
+        },
+        "node_env": {
+          "type": "string",
+          "description": "Environment - local, dev etc."
+        }
+      }
+    }
+  }
+}

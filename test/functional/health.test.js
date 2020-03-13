@@ -1,7 +1,7 @@
 import axios from 'axios';
 import adapter from 'axios/lib/adapters/http';
-import { message } from './api/health';
-import config from './config';
+import { message } from '../../src/api/health';
+import config from '../../src/config';
 
 describe('/health', () => {
   it('health endpoint returns matching data', async () => {
