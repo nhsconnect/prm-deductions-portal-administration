@@ -35,29 +35,6 @@ describe('app', () => {
     });
   });
 
-  describe('GET /example', () => {
-    it('should return a 200 status code', done => {
-      request(app)
-        .get('/example')
-        .expect(200)
-        .end(done);
-    });
-  });
-
-  describe('GET /example-authenticated', () => {
-    beforeEach(() => {
-      process.env.AUTHORIZATION_KEYS = 'correct-key,other-key';
-    });
-
-    it('should return a 200 status code when correctly authenticated', done => {
-      request(app)
-        .get('/example-authenticated')
-        .set('Authorization', 'correct-key')
-        .expect(200)
-        .end(done);
-    });
-  });
-
   describe('GET /swagger', () => {
     it('should return a 200 when router is configured', done => {
       request(app)

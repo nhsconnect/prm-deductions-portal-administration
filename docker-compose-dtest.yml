@@ -5,7 +5,7 @@ services:
       - admin:admin
     ports:
       - 3000:3000
-  generic-component:
+  admin:
     image: ${REPOSITORY_URI}:${COMMIT_HASH}
     environment:
       - NODE_ENV=local

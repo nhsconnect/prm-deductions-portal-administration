@@ -43,75 +43,20 @@
           }
         }
       }
-    },
-    "/example": {
-      "get": {
-        "tags": ["example"],
-        "summary": "hello world example api call",
-        "produces": ["text/plain"],
-        "responses": {
-          "200": {
-            "description": "Successful retrieval",
-            "schema": {
-              "$ref": "#/definitions/genericResponse"
-            }
-          },
-          "500": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
-      }
-    },
-    "/error": {
-      "get": {
-        "tags": ["error"],
-        "summary": "throws internal error for test purposes",
-        "produces": ["text/plain"],
-        "responses": {
-          "500": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
+    }
+  },
+  "/error": {
+    "get": {
+      "tags": ["error"],
+      "summary": "throws internal error for test purposes",
+      "produces": ["text/plain"],
+      "responses": {
+        "500": {
+          "description": "Error",
+          "schema": {
+            "$ref": "#/definitions/errorResponse"
           }
         }
-      }
-    },
-    "/example-authenticated": {
-      "get": {
-        "tags": ["example-authenticated"],
-        "summary": "hello world example api call with authentication",
-        "produces": ["text/plain"],
-        "responses": {
-          "200": {
-            "description": "Successful retrieval"
-          },
-          "401": {
-            "description": "Authorization header missing"
-          },
-          "403": {
-            "description": "Authorization key invalid"
-          },
-          "500": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
       }
     }
   },
