@@ -9,6 +9,7 @@
     "test:unit": "jest \"src/(?!(.*\\integration.test\\.js))\" --setupFiles dotenv/config",
     "test:integration": "jest \"src/.*\\integration.test\\.js\" --detectOpenHandles --forceExit --setupFiles dotenv/config",
     "test:functional": "concurrently --kill-others \"npm run build && PUBLIC_URL=http://localhost:3000 node build/server.js\"  \"npx jest test/functional/*\" -s first",
+    "test:docker": "jest test/docker/*",
     "test:watch": "jest \"src/(?!(.*\\integration.test\\.js))\" --setupFiles dotenv/config --watch",
     "test:coverage": "jest src/ --maxWorkers=1 --coverage --detectOpenHandles --forceExit --setupFiles dotenv/config",
     "test:access": "npm install --no-save puppeteer && wait-on http-get://localhost:3000 && pa11y-ci --config '.pa11yci.json'",
