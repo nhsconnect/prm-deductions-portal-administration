@@ -31,7 +31,7 @@ pipelines:
           - docs/**/*.*
       app:
         pipeline: prm-deductions-administration-portal
-        stage: test_docker
+        stage: docker
       base_infra:
         pipeline: prm-deductions-infra
         stage: deploy_dev
@@ -43,10 +43,10 @@ pipelines:
           jobs:
             deploy: *deploy_job
 
-      - test:
+      - functional:
           clean_workspace: true
           jobs:
-            smoke:
+            test:
               resources:
                 - docker
               tasks:
@@ -54,7 +54,7 @@ pipelines:
                     command: /bin/bash
                     arguments:
                       - -c
-                      - ./tasks smoke_test
+                      - ./tasks test_functional
   'prm-deductions-administration-portal.test':
     group: deductions
     label_template: '${git[:8]}'
@@ -74,10 +74,10 @@ pipelines:
           clean_workspace: true
           jobs:
             deploy: *deploy_job
-      - test:
+      - functional:
           clean_workspace: true
           jobs:
-            smoke:
+            test:
               resources:
                 - docker
               tasks:
@@ -85,4 +85,4 @@ pipelines:
                     command: /bin/bash
                     arguments:
                       - -c
-                      - ./tasks smoke_test
+                      - ./tasks test_functional

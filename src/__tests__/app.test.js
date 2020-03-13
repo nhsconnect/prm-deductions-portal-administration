@@ -1,12 +1,21 @@
 import request from 'supertest';
-import { message } from './api/health';
-import app from './app';
-import config from './config';
+import { message } from '../api/health';
+import app from '../app';
+import config from '../config';
 
-jest.mock('./config/logging');
-jest.mock('./middleware/auth');
+jest.mock('../config/logging');
 
 describe('app', () => {
+  describe('GET /', () => {
+    it('should return a 200 status code', done => {
+      request(app)
+        .get('/')
+        .expect(200)
+        .expect('Content-Type', 'text/html; charset=UTF-8')
+        .end(done);
+    });
+  });
+
   describe('GET /error', () => {
     it('should return a 500 status code when we call the error endpoint', done => {
       request(app)
@@ -35,16 +44,6 @@ describe('app', () => {
     });
   });
 
-  describe('GET /', () => {
-    it('should return a 200 status code', done => {
-      request(app)
-        .get('/')
-        .expect(200)
-        .expect('Content-Type', 'text/html; charset=UTF-8')
-        .end(done);
-    });
-  });
-
   describe('GET /example-authenticated', () => {
     beforeEach(() => {
       process.env.AUTHORIZATION_KEYS = 'correct-key,other-key';
@@ -55,6 +54,15 @@ describe('app', () => {
         .get('/example-authenticated')
         .set('Authorization', 'correct-key')
         .expect(200)
+        .end(done);
+    });
+  });
+
+  describe('GET /swagger', () => {
+    it('should return a 200 when router is configured', done => {
+      request(app)
+        .get('/swagger')
+        .expect(301)
         .end(done);
     });
   });

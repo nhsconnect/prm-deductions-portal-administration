@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import error from './api/error';
 import example from './api/example';
 import authenticatedExample from './api/example-authenticated';
-import healthCheck from './api/health';
+import health from './api/health';
 import { options } from './config/logging';
 import { authenticateRequest } from './middleware/auth';
 import swaggerDocument from './swagger.json';
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 app.use('/error', error);
-app.use('/health', healthCheck);
+app.use('/health', health);
 app.use('/example', example);
 app.use('/example-authenticated', authenticateRequest, authenticatedExample);
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

@@ -2,10 +2,27 @@
   "swagger": "2.0",
   "info": {
     "description": "Administration Portal",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Administration Portal"
   },
   "paths": {
+    "/": {
+      "get": {
+        "summary": "Returns basic page",
+        "produces": ["html"],
+        "responses": {
+          "200": {
+            "description": "Successful retrieval"
+          },
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "tags": ["health"],
@@ -34,7 +51,10 @@
         "produces": ["text/plain"],
         "responses": {
           "200": {
-            "description": "Successful retrieval"
+            "description": "Successful retrieval",
+            "schema": {
+              "$ref": "#/definitions/genericResponse"
+            }
           },
           "500": {
             "description": "Error",
@@ -109,6 +129,15 @@
         "error": {
           "type": "string",
           "description": "error message"
+        }
+      }
+    },
+    "genericResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "description": "message"
         }
       }
     },

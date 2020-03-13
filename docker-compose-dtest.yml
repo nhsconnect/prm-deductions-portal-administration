@@ -2,8 +2,11 @@ version: '2'
 services:
   default:
     links:
-      - portal:portal
+      - admin:admin
     ports:
       - 3000:3000
-  portal:
-    image: ${PORTAL_DOCKER_IMAGE}
+  generic-component:
+    image: ${REPOSITORY_URI}:${COMMIT_HASH}
+    environment:
+      - NODE_ENV=local
+      - AUTHORIZATION_KEYS=correct-key,other-key

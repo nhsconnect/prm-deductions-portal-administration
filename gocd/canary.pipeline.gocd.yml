@@ -50,26 +50,26 @@ pipelines:
                     arguments:
                       - -c
                       - ./tasks send_dead_canary_message
-            # integration:
-            #   resources:
-            #     - docker
-            #   tasks:
-            #     - fetch:
-            #         stage: update
-            #         job: update_package_json
-            #         source: package.json
-            #         is_file: yes
-            #     - exec:
-            #         command: /bin/bash
-            #         arguments:
-            #           - -c
-            #           - ./tasks test_integration
-            #     - exec:
-            #         run_if: failed
-            #         command: /bin/bash
-            #         arguments:
-            #           - -c
-            #           - ./tasks send_dead_canary_message
+            integration:
+              resources:
+                - docker
+              tasks:
+                - fetch:
+                    stage: update
+                    job: update_package_json
+                    source: package.json
+                    is_file: yes
+                - exec:
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks test_integration
+                - exec:
+                    run_if: failed
+                    command: /bin/bash
+                    arguments:
+                      - -c
+                      - ./tasks send_dead_canary_message
       - audit:
           clean_workspace: true
           jobs:
