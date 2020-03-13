@@ -14,7 +14,7 @@
     "access": "concurrently --kill-others \"npm run build && PUBLIC_URL=http://localhost:3000 node build/server.js\" \"npm run test-access\" -s first",
     "clean": "rm -rf build",
     "build:frontend": "cd build && rm -rf public && mkdir public && cd .. && cp server/public/index.html build/public && echo \"\n-- Copied public/index.html to build folder --\n\"",
-    "build:server": "babel server -d build --ignore '**/*.test.js' && cp server/*.json build",
+    "build:server": "babel server -d build --ignore '**/*.test.js' --ignore '**/__mocks__/*' && cp server/*.json build",
     "build": "npm run build:server && npm run build:frontend",
     "start": "npm run build && node build/server.js",
     "start-local": "babel-node -r node_modules/dotenv/config server/server.js",

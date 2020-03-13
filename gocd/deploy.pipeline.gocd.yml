@@ -63,7 +63,7 @@ pipelines:
         type: configrepo
       dev_env:
         pipeline: prm-deductions-administration-portal.dev
-        stage: deploy
+        stage: test
       base_infra:
         pipeline: prm-deductions-infra
         stage: deploy_test
