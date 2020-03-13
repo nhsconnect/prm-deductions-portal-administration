@@ -174,7 +174,7 @@ case "${command}" in
   _build)
       rm -rf build/*
       npm install
-      npm run build:server
+      npm run build
       ;;
   build)
       dojo "./tasks _build"
@@ -192,7 +192,7 @@ case "${command}" in
       ;;
   test_integration)
       configure_local_envs
-      dojo -c Dojofile-itest
+      dojo -c Dojofile-itest "./tasks _test_integration"
       ;;
   _test_functional)
       npm install
@@ -241,7 +241,7 @@ case "${command}" in
   test_docker_local)
       configure_local_envs
       get_latest_commit_hash
-      dojo -c Dojofile-dtest
+      dojo -c Dojofile-dtest "./tasks _test_docker"
       ;;
   tf)
       check_env

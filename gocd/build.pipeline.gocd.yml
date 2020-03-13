@@ -14,8 +14,7 @@ pipelines:
           jobs:
             test:
               resources:
-                - deductions-private
-                - 
+                - docker
               tasks:
                 - exec:
                     command: /bin/bash

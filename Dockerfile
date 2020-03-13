@@ -5,7 +5,6 @@ RUN apk add --no-cache tini
 
 COPY package*.json ./
 COPY build/ /app/
-COPY public/ /app/build/
 
 EXPOSE 3000
 
