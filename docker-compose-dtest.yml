@@ -2,10 +2,10 @@ version: '2'
 services:
   default:
     links:
-      - admin:admin
+      - administration-portal:administration-portal
     ports:
       - 3000:3000
-  admin:
+  administration-portal:
     image: ${REPOSITORY_URI}:${COMMIT_HASH}
     environment:
       - NODE_ENV=local
