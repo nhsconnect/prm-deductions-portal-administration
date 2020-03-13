@@ -43,18 +43,18 @@
           }
         }
       }
-    }
-  },
-  "/error": {
-    "get": {
-      "tags": ["error"],
-      "summary": "throws internal error for test purposes",
-      "produces": ["text/plain"],
-      "responses": {
-        "500": {
-          "description": "Error",
-          "schema": {
-            "$ref": "#/definitions/errorResponse"
+    },
+    "/error": {
+      "get": {
+        "tags": ["error"],
+        "summary": "throws internal error for test purposes",
+        "produces": ["text/plain"],
+        "responses": {
+          "500": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
           }
         }
       }
