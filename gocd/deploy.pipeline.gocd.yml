@@ -47,7 +47,8 @@ pipelines:
           jobs:
             test:
               resources:
-                - docker
+                - deductions-private
+                - dev
               tasks:
                 - exec:
                     command: /bin/bash
@@ -78,7 +79,8 @@ pipelines:
           jobs:
             test:
               resources:
-                - docker
+                - deductions-private
+                - test
               tasks:
                 - exec:
                     command: /bin/bash
