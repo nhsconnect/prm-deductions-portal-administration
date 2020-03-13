@@ -42,7 +42,6 @@ pipelines:
           clean_workspace: true
           jobs:
             deploy: *deploy_job
-
       - functional:
           clean_workspace: true
           jobs:
