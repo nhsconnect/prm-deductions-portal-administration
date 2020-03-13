@@ -110,6 +110,7 @@ command="$1"
 case "${command}" in
   _dep)
       echo "Running NPM Audit ..."
+      npm install
       npm audit
       ;;
   dep)

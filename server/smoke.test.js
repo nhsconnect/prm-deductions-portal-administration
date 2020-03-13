@@ -1,11 +1,13 @@
 import axios from 'axios';
+import adapter from 'axios/lib/adapters/http';
 import { message } from './api/health';
 import config from './config';
 
-describe('Smoke test', () => {
+describe('/health', () => {
   it('health endpoint returns matching data', async () => {
-    const healthUrl = `${config.url}/health`;
-    const res = await axios.get(healthUrl);
+    const res = await axios.get(`${config.url}/health`, {
+      adapter
+    });
 
     expect(res.data).toEqual(expect.objectContaining(message));
   });
