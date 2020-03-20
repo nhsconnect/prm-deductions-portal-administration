@@ -3,6 +3,7 @@
 
 # Locally generated files
 outdated-dependencies.txt
+tf-out.json
 
 # Directory for storing files when running locally
 local-datastore
