@@ -37,7 +37,6 @@ function configure_service_url {
 }
 
 function configure_local_envs {
-  export AUTHORIZATION_KEYS="correct-key,other-key"
   export REPOSITORY_URI=$IMAGE_REPO_NAME
   export NODE_ENV=local
   configure_service_url
@@ -46,14 +45,6 @@ function configure_local_envs {
 function get_aws_account_id {
      AWS_ACCOUNT_ID=$(dojo -c Dojofile-infra "aws sts get-caller-identity | jq -r .Account")
  }
-
-function configure_aws_service_auth_keys {
-    check_env
-    get_aws_account_id
-    parameter_name="/NHS/${NHS_ENVIRONMENT}-${AWS_ACCOUNT_ID}/${NHS_SERVICE}/authorization_keys"
-    echo "${parameter_name}"
-    export AUTHORIZATION_KEYS=$(dojo -c Dojofile-infra "aws ssm get-parameter --with-decryption --region ${AWS_DEFAULT_REGION} --name  ${parameter_name} | jq -r .Parameter.Value")
-}
 
 function get_aws_ssm_secret {
   secret_id=$1
@@ -199,7 +190,6 @@ case "${command}" in
       npm run test:functional
       ;;
   test_functional)
-      configure_aws_service_auth_keys
       configure_service_url
       dojo "./tasks _test_functional"
       ;;
@@ -242,6 +232,11 @@ case "${command}" in
       configure_local_envs
       get_latest_commit_hash
       dojo -c Dojofile-dtest "./tasks _test_docker"
+      ;;
+  run_docker_local)
+      configure_local_envs
+      get_latest_commit_hash
+      dojo -c Dojofile-local
       ;;
   tf)
       check_env
